@@ -5,7 +5,10 @@ mongoose.connect(process.env.DB);
 
 // Movie schema
 var MovieSchema = new Schema({
-
+    title: {type: String, required: true, index: {unique: true}},
+    releaseDate: String,
+    genre: String,
+    actorList: {}
 });
 
 // return the model
