@@ -107,9 +107,11 @@ router.post('/movies', (req, res) => {
     if(!req.body.title){
         res.json({success: false, msg: 'Please include movie title.'})
     }else {
-        var newMovie = {
-            title: req.body.title
-        };
+        var newMovie = new Movie()
+        newMovie.title = req.body.title;
+        newMovie.releaseDate = req.body.releaseDate;
+        newMovie.genre = req.body.genre;
+        newMovie.actorList = req.body.actorList;
     }
     db.saveMovie(newMovie); //no duplicate checking
     var token = jwt.sign(newMovie, process.env.UNIQUE_KEY);
