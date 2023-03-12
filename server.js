@@ -1,5 +1,5 @@
 /*
-CSC3916 HW2
+CSC3916 HW3
 File: Server.js
 Description: Web API scaffolding for Movie API
  */
@@ -173,8 +173,6 @@ router.route('/testcollection')
         res.json(o);
     }
     );
-    
-
 
 app.use('/', router);
 app.listen(process.env.PORT || 8080);
