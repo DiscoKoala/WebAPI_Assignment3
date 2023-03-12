@@ -8,8 +8,8 @@ opts.jwtFromRequest = ExtractJwt.fromAuthHeaderWithScheme("jwt");
 opts.secretOrKey = process.env.UNIQUE_KEY;
 
 passport.use(new JwtStrategy(opts, function(jwt_payload, done) {
+    var user = db.find(jwt_payload.id);
     User.findById(jwt_payload.id, function (err, user) {
-        var user = db.find(jwt_payload.id);
         if (user) {
             done(null, user);
         } else {
