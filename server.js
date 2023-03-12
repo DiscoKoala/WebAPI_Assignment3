@@ -4,6 +4,7 @@ File: Server.js
 Description: Web API scaffolding for Movie API
  */
 require('dotenv').config();
+db = require('./db')();
 var express = require('express');
 var bodyParser = require('body-parser');
 var passport = require('passport');
@@ -50,7 +51,7 @@ router.post('/signup', function(req, res) {
         user.username = req.body.username;
         user.password = req.body.password;
 
-        user.save(function(err){
+        db.save(function(err){
             if (err) {
                 if (err.code == 11000)
                     return res.json({ success: false, message: 'A user with that username already exists.'});
@@ -64,16 +65,16 @@ router.post('/signup', function(req, res) {
 });
 
 router.post('/signin', function (req, res) {
-    var userNew = new User();
-    userNew.username = req.body.username;
-    userNew.password = req.body.password;
+    var user = new User();
+    user.username = req.body.username;
+    user.password = req.body.password;
 
-    User.findOne({ username: userNew.username }).select('name username password').exec(function(err, user) {
+    User.findOne({ username: user.username }).select('name username password').exec(function(err, user) {
         if (err) {
             res.send(err);
         }
 
-        user.comparePassword(userNew.password, function(isMatch) {
+        user.comparePassword(user.password, function(isMatch) {
             if (isMatch) {
                 var userToken = { id: user.id, username: user.username };
                 var token = jwt.sign(userToken, process.env.SECRET_KEY);
