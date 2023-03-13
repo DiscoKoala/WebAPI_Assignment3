@@ -86,71 +86,72 @@ router.post('/signin', function (req, res) {
     })
 });
 
-// router.get('/movies', (req, res) => {
-//     var movie = Movie.findOneMovie(req.body.title);
+router.get('/movies', (req, res) => {
+    var movie = Movie.findOneMovie(req.body.title);
 
-//     if(!movie){
-//         res.status(404).send({success: false, message: 'Query failed. Movie not found.'});
-//     } else {
-//         if(req.body.title == movie.title) {
-//             var movieToken = { id: movie.title };
-//             var token = jwt.sign(movieToken, process.env.UNIQUE_KEY)
-//             res.status(200).json({success: true, message: 'GET movies', token: token});
-//         }
-//         else{
-//             res.status(404).send({success: false, message: 'Query failed.'});
-//         }
-//     }
-// });
+    if(!movie){
+        res.status(404).send({success: false, message: 'Query failed. Movie not found.'});
+    } else {
+        if(req.body.title == movie.title) {
+            var movieToken = { id: movie.title };
+            var token = jwt.sign(movieToken, process.env.UNIQUE_KEY)
+            res.status(200).json({success: true, message: 'GET movies', token: token});
+        }
+        else{
+            res.status(404).send({success: false, message: 'Query failed.'});
+        }
+    }
+});
 
-// router.post('/movies', (req, res) => {
-//     if(!req.body.title){
-//         res.json({success: false, msg: 'Please include movie title.'})
-//     }else {
-//         var newMovie = new Movie()
-//         newMovie.title = req.body.title;
-//         newMovie.releaseDate = req.body.releaseDate;
-//         newMovie.genre = req.body.genre;
-//         newMovie.actorList = req.body.actorList;
-//     }
-//     Movie.saveMovie(newMovie); //no duplicate checking
-//     var token = jwt.sign(newMovie, process.env.UNIQUE_KEY);
-//     res.status(200).json({success: true, message: 'movie saved', token: token});
-// });
+router.post('/movies', (req, res) => {
+    if(!req.body.title){
+        res.json({success: false, msg: 'Please include movie title.'})
+    }else {
+        var newMovie = new Movie()
+        newMovie.title = req.body.title;
+        newMovie.releaseDate = req.body.releaseDate;
+        newMovie.genre = req.body.genre;
+        newMovie.actorList = req.body.actorList;
+    }
+    Movie.saveMovie(newMovie); //no duplicate checking
+    var token = jwt.sign(newMovie, process.env.UNIQUE_KEY);
+    res.status(200).json({success: true, message: 'movie saved', token: token});
+});
 
-// router.delete('/movies', authController.isAuthenticated, (req, res) => {
-//     var movie = Movie.findOneMovie(req.body.title);
+router.delete('/movies', authController.isAuthenticated, (req, res) => {
+    var movie = Movie.findOneMovie(req.body.title);
 
-//     if(!movie){
-//         res.status(404).send({success: false, message: 'Query failed. Movie not found.'});
-//     } else{
-//         if(req.body.title == movie.title){
-//             Movie.removeMovie(movie);
-//             res.status(200).json({success: true, message: 'movie deleted'});
-//         }
-//         else{
-//         res.status(404).send({success: false, message: 'Query failed. Movie not found.'});
-//         }
-//     }
-// });
+    if(!movie){
+        res.status(404).send({success: false, message: 'Query failed. Movie not found.'});
+    } else{
+        if(req.body.title == movie.title){
+            Movie.removeMovie(movie);
+            res.status(200).json({success: true, message: 'movie deleted'});
+        }
+        else{
+        res.status(404).send({success: false, message: 'Query failed. Movie not found.'});
+        }
+    }
+});
 
-// router.put('/movies', authJwtController.isAuthenticated, (req, res) => {
-//     var movie = Movie.findOneMovie(req.body.title);
+router.put('/movies', authJwtController.isAuthenticated, (req, res) => {
+    var movie = Movie.findOneMovie(req.body.title);
 
-//     if(!movie){
-//         res.status(404).send({success: false, message: 'Query failed. Movie not found.'});
-//     } else{
-//         if(req.body.title == movie.title){
-//             Movie.updateMovie(movie.id, movie);
-//             var movieToken = {title: movie.title};
-//             var token = jwt.sign(movieToken, process.env.UNIQUE_KEY)
-//             res.status(200).json({success: true, message: 'movie updated', token: token});
-//         }
-//         else{
-//         res.status(404).send({success: false, message: 'Query failed. Movie not found.'});
-//         }
-//     }
-// });
+    if(!movie){
+        res.status(404).send({success: false, message: 'Query failed. Movie not found.'});
+    } else{
+        if(req.body.title == movie.title){
+            Movie.updateMovie(movie.id, movie);
+            var movieToken = {title: movie.title};
+            var token = jwt.sign(movieToken, process.env.UNIQUE_KEY)
+            res.status(200).json({success: true, message: 'movie updated', token: token});
+        }
+        else{
+        res.status(404).send({success: false, message: 'Query failed. Movie not found.'});
+        }
+    }
+});
+
 
 router.route('/testcollection')
     .delete(authController.isAuthenticated, (req, res) => {
