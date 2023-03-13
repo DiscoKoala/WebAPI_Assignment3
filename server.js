@@ -162,7 +162,6 @@ router.put('/movies', authJwtController.isAuthenticated, (req, res) => {
     }
 });
 
-
 router.route('/testcollection')
     .delete(authController.isAuthenticated, (req, res) => {
         console.log(req.body);
