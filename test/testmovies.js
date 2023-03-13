@@ -63,6 +63,7 @@ describe('Test Movie Routes', () => {
                         res.should.have.status(200);
                         res.body.should.have.property('token');
                         token = res.body.token;
+                        console.log(token);
                         done();
                     })
               })
