@@ -94,7 +94,7 @@ router.get('/movies', (req, res) => {
     } else {
         if(req.body.title == movie.title) {
             var movieToken = { id: movie.title };
-            var token = jwt.sign(movieToken, process.env.UNIQUE_KEY)
+            var token = jwt.sign(movieToken, process.env.SECRET_KEY)
             res.status(200).json({success: true, message: 'GET movies', token: token});
         }
         else{
@@ -106,32 +106,42 @@ router.get('/movies', (req, res) => {
 router.post('/movies', (req, res) => {
     if(!req.body.title){
         res.json({success: false, msg: 'Please include movie title.'})
-    }else {
-        var newMovie = new Movie()
-        newMovie.title = req.body.title;
-        newMovie.releaseDate = req.body.releaseDate;
-        newMovie.genre = req.body.genre;
-        newMovie.actorList = req.body.actorList;
     }
-    Movie.saveMovie(newMovie); //no duplicate checking
-    var token = jwt.sign(newMovie, process.env.UNIQUE_KEY);
-    res.status(200).json({success: true, message: 'movie saved', token: token});
+    var newMovie = new Movie()
+    newMovie.title = req.body.title;
+    newMovie.releaseDate = req.body.releaseDate;
+    newMovie.genre = req.body.genre;
+    newMovie.actorList = req.body.actorList;
+    
+    newMovie.save(function(err){
+        if (err) {
+            if (err.code == 11000)
+                return res.json({ success: false, message: 'A movie with that title already exists.'});
+            else
+                return res.json(err);
+        }
+        
+        var token = jwt.sign(newMovie, process.env.SECRET_KEY);
+        res.json({success: true, msg: 'Successfully add new movie.', token: token})
+    });  
 });
 
 router.delete('/movies', authController.isAuthenticated, (req, res) => {
-    var movie = Movie.findOneMovie(req.body.title);
+    var newMovie = new Movie();
+    newMovie.title = req.body.title;
+    newMovie.releaseDate = req.body.releaseDate;
 
-    if(!movie){
-        res.status(404).send({success: false, message: 'Query failed. Movie not found.'});
-    } else{
-        if(req.body.title == movie.title){
-            Movie.removeMovie(movie);
-            res.status(200).json({success: true, message: 'movie deleted'});
+    Movie.findOneMovie({title: newMovie.title}).select("title releaseDate").exec(function(err, movie){;
+        if (err) {
+            res.send(err);
         }
-        else{
-        res.status(404).send({success: false, message: 'Query failed. Movie not found.'});
+        
+        if(newMovie.title == movie.title){
+            movie.delete(newMovie.title);
+            var token = jwt.sign(newMovie, process.env.SECRET_KEY);
+            res.json({success: true, msg: 'Successfully deleted movie.', token: token})
         }
-    }
+    })
 });
 
 router.put('/movies', authJwtController.isAuthenticated, (req, res) => {

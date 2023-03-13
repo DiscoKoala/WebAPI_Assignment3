@@ -12,5 +12,6 @@ var MovieSchema = new Schema({
         Character: {type: String, required: true}}]}
 });
 
+
 // return the model
 module.exports = mongoose.model('Movie', MovieSchema);
