@@ -113,14 +113,13 @@ router.post('/movies', (req, res) => {
     newMovie.genre = req.body.genre;
     newMovie.actorList = req.body.actorList;
     
-    newMovie.save(function(err){
+    newMovie.saveMovie(function(err){
         if (err) {
             if (err.code == 11000)
                 return res.json({ success: false, message: 'A movie with that title already exists.'});
             else
                 return res.json(err);
         }
-        
         var token = jwt.sign(newMovie, process.env.SECRET_KEY);
         res.json({success: true, msg: 'Successfully add new movie.', token: token})
     });  
@@ -137,7 +136,7 @@ router.delete('/movies', authController.isAuthenticated, (req, res) => {
         }
         
         if(newMovie.title == movie.title){
-            movie.delete(newMovie.title);
+            movie.removeMovie(newMovie.title);
             var token = jwt.sign(newMovie, process.env.SECRET_KEY);
             res.json({success: true, msg: 'Successfully deleted movie.', token: token})
         }
@@ -151,7 +150,7 @@ router.put('/movies', authJwtController.isAuthenticated, (req, res) => {
         res.status(404).send({success: false, message: 'Query failed. Movie not found.'});
     } else{
         if(req.body.title == movie.title){
-            Movie.updateMovie(movie.id, movie);
+            movie.updateMovie(movie.id, movie);
             var movieToken = {title: movie.title};
             var token = jwt.sign(movieToken, process.env.UNIQUE_KEY)
             res.status(200).json({success: true, message: 'movie updated', token: token});
