@@ -113,7 +113,7 @@ router.post('/movies', (req, res) => {
     newMovie.genre = req.body.genre;
     newMovie.actorList = req.body.actorList;
     
-    newMovie.saveMovie(function(err){
+    newMovie.save(function(err){
         if (err) {
             if (err.code == 11000)
                 return res.json({ success: false, message: 'A movie with that title already exists.'});
