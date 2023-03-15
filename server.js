@@ -96,10 +96,13 @@ router.get('/movies', (req, res) => {
     else {
         Movie.find(function(err, movies){
             if(err){
-                return res.status(500).sendFile(err)
-                };
+                return res.status(500).send(err)
+                }
+                else{
+                res.status(200).json(movies);
+                }
             })
-            res.status(200).json(movies);
+             
         }
     });
 
