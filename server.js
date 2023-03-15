@@ -154,7 +154,7 @@ router.put('/movies', authJwtController.isAuthenticated, (req, res) => {
             return res.status(500).send(err)
             }
             else{
-            res.status(200).json(movies);
+            res.status(200).json({success: true, message: "Movie deleted!"});
             }
         })
     }
