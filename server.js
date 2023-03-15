@@ -86,7 +86,7 @@ router.post('/signin', function(req, res) {
     })
 });
 
-router.get('/movies', function(req, res) {
+router.get('/movies', authJwtController.isAuthenticated, function(req, res) {
     var movies = new Movie()
     movies.title = req.body.title;
 
@@ -106,7 +106,7 @@ router.get('/movies', function(req, res) {
         }
     });
 
-router.post('/movies', function(req, res) {
+router.post('/movies', authJwtController.isAuthenticated, function(req, res) {
     if(!req.body.title){
         res.json({success: false, msg: 'Please include movie title.'})
     }
@@ -127,7 +127,7 @@ router.post('/movies', function(req, res) {
     });  
 });
 
-router.delete('/movies', authController.isAuthenticated, function(req, res) {
+router.delete('/movies', authJwtController.isAuthenticated, function(req, res) {
     var newMovie = new Movie();
     newMovie.title = req.body.title;
     newMovie.releaseDate = req.body.releaseDate;
