@@ -72,63 +72,63 @@ module.exports = function () {
          /*
          * Functions for manipulating movie data
          */
-         updateMovie: function (id, movie) {
-            var movieIndex = this.movieList.findIndex(function (element) {
-                return element.id === id;
-            });
-            if (movieIndex !== -1) {
-                this.userList[movieIndex].title = movie.title;
-                this.userList[movieIndex].id = movie.id;
-                return 1;
-            }
-            else {
-                return 0;
-            }
-        },
+//          updateMovie: function (id, movie) {
+//             var movieIndex = this.movieList.findIndex(function (element) {
+//                 return element.id === id;
+//             });
+//             if (movieIndex !== -1) {
+//                 this.userList[movieIndex].title = movie.title;
+//                 this.userList[movieIndex].id = movie.id;
+//                 return 1;
+//             }
+//             else {
+//                 return 0;
+//             }
+//         },
 
-        saveMovie: function (movie) {
-            movie.id = crypto.randomBytes(20).toString('hex'); // fast enough for our purpose
-            this.movieList.push(movie);
-            return 1;
-        },
+//         saveMovie: function (movie) {
+//             movie.id = crypto.randomBytes(20).toString('hex'); // fast enough for our purpose
+//             this.movieList.push(movie);
+//             return 1;
+//         },
 
-        removeMovie: function (id) {
-            var found = 0;
-            this.movieList = this.movieList.filter(function (element) {
-                if (element.id === id) {
-                    this.movieList.slice(element);
-                    found = 1;
-                }
-                else {
-                    return element.id !== id;
-                }
-            });
-            return found;
-        },
+//         removeMovie: function (id) {
+//             var found = 0;
+//             this.movieList = this.movieList.filter(function (element) {
+//                 if (element.id === id) {
+//                     this.movieList.slice(element);
+//                     found = 1;
+//                 }
+//                 else {
+//                     return element.id !== id;
+//                 }
+//             });
+//             return found;
+//         },
 
-        findMovie: function (id) {
-            if (id) {
-                return this.movieList.find(function (element) {
-                    return element.id === id;
-                });
-            }
-            else {
-                return this.movieList;
-            }
-        },
+//         findMovie: function (id) {
+//             if (id) {
+//                 return this.movieList.find(function (element) {
+//                     return element.id === id;
+//                 });
+//             }
+//             else {
+//                 return this.movieList;
+//             }
+//         },
 
-        findOneMovie: function (name) {
-            if (name) {
-                return this.movieList.find(function (element) {
-                    if(element.title === name){
-                        return element;
-                    }
-                });
-            }
-            else {
-                return this.userList;
-            }
-        }
+//         findOneMovie: function (name) {
+//             if (name) {
+//                 return this.movieList.find(function (element) {
+//                     if(element.title === name){
+//                         return element;
+//                     }
+//                 });
+//             }
+//             else {
+//                 return this.userList;
+//             }
+//         }
     
     };
 };
