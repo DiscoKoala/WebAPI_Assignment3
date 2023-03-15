@@ -77,7 +77,7 @@ router.post('/signin', function(req, res) {
             if (isMatch) {
                 var userToken = { id: user.id, username: user.username };
                 var token = jwt.sign(userToken, process.env.SECRET_KEY);
-                res.json ({success: true, token: token});
+                res.json ({success: true, token: "jwt" + token});
             }
             else {
                 res.status(401).send({success: false, msg: 'Authentication failed.'});
@@ -132,7 +132,7 @@ router.delete('/movies', authJwtController.isAuthenticated, function(req, res) {
     newMovie.title = req.body.title;
     newMovie.releaseDate = req.body.releaseDate;
 
-    newMovie.deleteOne({title: newMovie.title},function(err, movie){
+    Movie.deleteOne({title: newMovie.title},function(err, movie){
         if(err){
             return res.status(500).send(err)
             }
