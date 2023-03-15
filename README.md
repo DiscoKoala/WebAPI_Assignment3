@@ -66,7 +66,11 @@ Create a collection in MongoDB to hold information about movies
 - -1 missing Test error conditions
 - -1 missing PostMan tests (signup, signin, separate call for each route)
 
+## Postman 
+[![Run in Postman](https://run.pstmn.io/button.svg)](https://app.getpostman.com/run-collection/25532347-bea39d6f-ef03-4049-b1c8-edb64ff4bd6c?action=collection%2Ffork&collection-url=entityId%3D25532347-bea39d6f-ef03-4049-b1c8-edb64ff4bd6c%26entityType%3Dcollection%26workspaceId%3D8c84cc9c-d8af-4d12-b944-216d934ee631#?env%5BWesleyLab3%5D=W3sia2V5IjoiVU5JUVVFX0tFWSIsInZhbHVlIjoiZTBjMmE4YTliYjJhYThkMDkzNmUyZGUzMjZmY2JlMDAiLCJlbmFibGVkIjp0cnVlLCJ0eXBlIjoiZGVmYXVsdCIsInNlc3Npb25WYWx1ZSI6IiIsInNlc3Npb25JbmRleCI6MH0seyJrZXkiOiJTRUNSRVRfS0VZIiwidmFsdWUiOiIyYjdhYTVkNGUwNzVlNTI4YWY4ZDFjMDUwNWZiODlkNiIsImVuYWJsZWQiOnRydWUsInR5cGUiOiJkZWZhdWx0Iiwic2Vzc2lvblZhbHVlIjoiIiwic2Vzc2lvbkluZGV4IjoxfSx7ImtleSI6InRva2VuIiwidmFsdWUiOiIiLCJlbmFibGVkIjp0cnVlLCJ0eXBlIjoiZGVmYXVsdCIsInNlc3Npb25WYWx1ZSI6ImV5SmhiR2NpT2lKSVV6STFOaUlzSW5SNWNDSTZJa3BYVkNKOS5leUpwWkNJNklqWTBNVEJrWXpRMk1EZG1NRFV3TURBME1XUmtZemxqTkNJc0luVnpaWEp1WVcxbElqb2lWMlZ6YkdWNVFrcHZhRzV6YjI0aUxDSnBZWFFpT2pFMk56ZzVNVEE1Li4uIiwic2Vzc2lvbkluZGV4IjoyfSx7ImtleSI6IkRCIiwidmFsdWUiOiIiLCJlbmFibGVkIjp0cnVlLCJ0eXBlIjoiZGVmYXVsdCIsInNlc3Npb25WYWx1ZSI6Im1vbmdvZGIrc3J2Oi8vY2x1c3RlcjAucDlpa2xrZS5tb25nb2RiLm5ldC8/YXV0aFNvdXJjZT0lMjRleHRlcm5hbCZhdXRoTWVjaGFuaXNtPU1PTkdPREItWDUwOSZyZXRyeVdyaXRlcz10cnVlJnc9bWFqb3JpdHkiLCJzZXNzaW9uSW5kZXgiOjN9XQ==)
+
 ## Resources
 - https://www.mongodb.com/cloud/atlas
 - Create a Free Subscription *Amazon
 - https://render.com/docs/deploy-create-react-app **important: Environment Variable for https://github.com/AliceNN-ucdenver/CSC3916_REACT env.REACT_APP_API_URL, this weekend I will look at changes (I believe only 1 change in the actions)
+
