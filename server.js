@@ -132,7 +132,7 @@ router.delete('/movies', authController.isAuthenticated, function(req, res) {
     newMovie.title = req.body.title;
     newMovie.releaseDate = req.body.releaseDate;
 
-    newMovie.collection("webapi").deleteOne({title: newMovie.title},function(err, movie){
+    Movie.collection("webapi").deleteOne({title: newMovie.title},function(err, movie){
         if(err){
             return res.status(500).send(err)
             }
