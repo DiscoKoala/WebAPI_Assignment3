@@ -94,7 +94,7 @@ router.get('/movies', (req, res) => {
         res.status(404).send({success: false, message: 'Query failed. Movie not found.'});
     } 
     else {
-        Movie.findOne(function(err){
+        Movie.findOne({title: movie.title}).select('title releaseDate genre actorList').exec(function(err){
             if(err){
                 return res.json(err)
                 };
@@ -138,7 +138,7 @@ router.delete('/movies', authController.isAuthenticated, (req, res) => {
         }
         
         if(newMovie.title == movie.title){
-            movie.removeMovie(newMovie.title);
+            movie.deleteOne(newMovie.title);
             var token = jwt.sign(newMovie, process.env.SECRET_KEY);
             res.json({success: true, msg: 'Successfully deleted movie.', token: token})
         }
