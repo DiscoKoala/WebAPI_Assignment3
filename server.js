@@ -87,19 +87,26 @@ router.post('/signin', function (req, res) {
 });
 
 router.get('/movies', (req, res) => {
-    var movie = Movie.findOneMovie(req.body.title);
+    var movie = new Movie()
+    movie.title = req.body.title;
 
     if(!movie){
         res.status(404).send({success: false, message: 'Query failed. Movie not found.'});
-    } else {
-        if(req.body.title == movie.title) {
+    } 
+    else {
+        movie.findOne(function(err){
+            if(err){
+                if(err.code == 112){
+                    return res.json({success: false, message: "Error in transaction." })
+                }
+                else{
+                    return res.json(err)
+                };
+            }
             var movieToken = { id: movie.title };
             var token = jwt.sign(movieToken, process.env.SECRET_KEY)
             res.status(200).json({success: true, message: 'GET movies', token: token});
-        }
-        else{
-            res.status(404).send({success: false, message: 'Query failed.'});
-        }
+        })
     }
 });
 
