@@ -63,7 +63,7 @@ router.post('/signup', function(req, res) {
     }
 });
 
-router.post('/signin', function (req, res) {
+router.post('/signin', function(req, res) {
     var userNew = new User();
     userNew.username = req.body.username;
     userNew.password = req.body.password;
@@ -86,7 +86,7 @@ router.post('/signin', function (req, res) {
     })
 });
 
-router.get('/movies', (req, res) => {
+router.get('/movies', function(req, res) {
     var movies = new Movie()
     movies.title = req.body.title;
 
@@ -106,7 +106,7 @@ router.get('/movies', (req, res) => {
         }
     });
 
-router.post('/movies', (req, res) => {
+router.post('/movies', function(req, res) {
     if(!req.body.title){
         res.json({success: false, msg: 'Please include movie title.'})
     }
@@ -127,12 +127,12 @@ router.post('/movies', (req, res) => {
     });  
 });
 
-router.delete('/movies', authController.isAuthenticated, (req, res) => {
+router.delete('/movies', authController.isAuthenticated, function(req, res) {
     var newMovie = new Movie();
     newMovie.title = req.body.title;
     newMovie.releaseDate = req.body.releaseDate;
 
-    newMovie.deleteOne(function(err){
+    newMovie.collection("webapi").deleteOne({title: newMovie.title},function(err, movie){
         if(err){
             return res.status(500).send(err)
             }
@@ -142,7 +142,7 @@ router.delete('/movies', authController.isAuthenticated, (req, res) => {
         })
 });
 
-router.put('/movies', authJwtController.isAuthenticated, (req, res) => {
+router.put('/movies', authJwtController.isAuthenticated, function(req, res) {
     var movie = new Movie()
     movie.title = req.body.title;
     movie.releaseDate = req.body.releaseDate;
@@ -161,7 +161,7 @@ router.put('/movies', authJwtController.isAuthenticated, (req, res) => {
 );
 
 router.route('/testcollection')
-    .delete(authController.isAuthenticated, (req, res) => {
+    .delete(authController.isAuthenticated, function(req, res) {
         console.log(req.body);
         res = res.status(200);
         if (req.get('Content-Type')) {
@@ -171,7 +171,7 @@ router.route('/testcollection')
         res.json(o);
     }
     )
-    .put(authJwtController.isAuthenticated, (req, res) => {
+    .put(authJwtController.isAuthenticated, function(req, res) {
         console.log(req.body);
         res = res.status(200);
         if (req.get('Content-Type')) {

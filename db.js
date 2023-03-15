@@ -69,9 +69,9 @@ module.exports = function () {
                 return 0;
             }
         },
-         /*
-         * Functions for manipulating movie data
-         */
+        //  /*
+        //  * Functions for manipulating movie data
+        //  */
 //          updateMovie: function (id, movie) {
 //             var movieIndex = this.movieList.findIndex(function (element) {
 //                 return element.id === id;
