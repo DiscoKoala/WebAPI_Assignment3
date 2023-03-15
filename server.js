@@ -87,23 +87,21 @@ router.post('/signin', function (req, res) {
 });
 
 router.get('/movies', (req, res) => {
-    var movie = new Movie()
+    var movies = new Movie()
     movie.title = req.body.title;
 
-    if(!movie){
+    if(!movies){
         res.status(404).send({success: false, message: 'Query failed. Movie not found.'});
     } 
     else {
-        Movie.findOne({title: movie.title}).select('title releaseDate genre actorList').exec(function(err){
+        Movie.find(function(err, movies){
             if(err){
-                return res.json(err)
+                return res.status(500).sendFile(err)
                 };
             })
-            var token = jwt.sign(movie, process.env.SECRET_KEY)
-            res.status(200).json({success: true, message: 'GET movies', token: token});
+            res.status(200).json(movies);
         }
-    }
-);
+    });
 
 router.post('/movies', (req, res) => {
     if(!req.body.title){
@@ -122,8 +120,7 @@ router.post('/movies', (req, res) => {
             else
                 return res.json(err);
         }
-        var token = jwt.sign(newMovie, process.env.SECRET_KEY);
-        res.json({success: true, msg: 'Successfully add new movie.', token: token})
+        res.json({success: true, msg: 'Successfully add new movie.'})
     });  
 });
 
