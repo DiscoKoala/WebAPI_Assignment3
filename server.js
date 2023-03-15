@@ -132,13 +132,13 @@ router.delete('/movies', authController.isAuthenticated, (req, res) => {
     newMovie.title = req.body.title;
     newMovie.releaseDate = req.body.releaseDate;
 
-    newMovie.remove(function(err, movies){
+    newMovie.deleteOne(function(err, movies){
         if(err){
             return res.status(500).send(err)
             }
-            else{
-            res.status(200).json(movies);
-            }
+        else{
+            res.status(200).json({success: true, message: "Movie deleted!"});
+        }
         })
 });
 
@@ -154,7 +154,7 @@ router.put('/movies', authJwtController.isAuthenticated, (req, res) => {
             return res.status(500).send(err)
             }
             else{
-            res.status(200).json({success: true, message: "Movie deleted!"});
+            res.status(200).json({success: true, message: "Movie updated!"});
             }
         })
     }
