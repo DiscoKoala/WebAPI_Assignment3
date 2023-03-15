@@ -88,7 +88,7 @@ router.post('/signin', function (req, res) {
 
 router.get('/movies', (req, res) => {
     var movies = new Movie()
-    movie.title = req.body.title;
+    movies.title = req.body.title;
 
     if(!movies){
         res.status(404).send({success: false, message: 'Query failed. Movie not found.'});
