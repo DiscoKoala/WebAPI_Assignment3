@@ -161,6 +161,47 @@ router.put('/movies', authJwtController.isAuthenticated, function(req, res) {
     }
 );
 
+router.post('./reviews',  authJwtController.isAuthenticated, function(req, res) {
+    if(!req.body.movieID){
+        res.json({success: false, msg: 'Please include movie ID.'})
+    }
+
+    var newReview = new Review()
+    newReview.movieID = req.body.movieID,
+    newReview.username = req.body.username,
+    newReview.rating = req.body.rating
+
+    newReview.save(function(err){
+        if (err) {
+            if (err.code == 500)
+                return res.json({ success: false, message: 'Something went wrong.'});
+            else
+                return res.json(err);
+        }
+        res.json({success: true, msg: 'Successfully add new movie review!'})
+    });
+});
+
+router.get('./reviews',  authJwtController.isAuthenticated, function(req, res) {
+    var review = new Review();
+    review.movieID = req.body.movieID
+
+    if(!review){
+        res.status(404).send({success: false, message: 'Query failed. Review not found.'});
+    } 
+    else {
+        Review.find(function(err, movies){
+            if(err){
+                return res.status(500).send(err)
+                }
+                else{
+                res.status(200).json(review);
+                }
+            })
+             
+        }
+});
+
 router.route('/testcollection')
     .delete(authController.isAuthenticated, function(req, res) {
         console.log(req.body);
