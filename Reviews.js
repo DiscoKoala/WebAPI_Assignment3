@@ -9,7 +9,7 @@ var ReviewSchema = new Schema({
     movieID: {type: String, required: true, index: {unique: true}},
     username: {type: String, required: true, index: { unique: true }},
     review: {type: String, required: true},
-    rating: {type: float, required: true}
+    rating: {type: String, required: true}
 
 });
 
