@@ -6,10 +6,10 @@ mongoose.connect(process.env.DB);
 // Movie schema
 var ReviewSchema = new Schema({
 
-    movieID: String,
-    username: { type: String, required: true, index: { unique: true }},
-    review: String,
-    rating: int 
+    movieID: {type: String, required: true, index: {unique: true}},
+    username: {type: String, required: true, index: { unique: true }},
+    review: {type: String, required: true},
+    rating: {type: float, required: true}
 
 });
 
