@@ -88,6 +88,29 @@ router.post('/signin', function(req, res) {
 });
 
 router.get('/movies', authJwtController.isAuthenticated, function(req, res) {
+    if(req.query.review == "true"){
+        movies.aggregate(([
+            {
+                $lookup: 
+                {
+                    from: "review",
+                    localField: " _id",
+                    foriegnField: "movieID",
+                    as: "reviews"
+                }
+            },
+            {
+                $addField: { average_rating: { $avg: "$reviews.rating"} }
+            },
+            {
+                $sort: {average_rating: -1}
+            }
+
+        ])).exec((err, movies) =>{
+            res.json(movies)
+        })    
+    } else{
+
     var movies = new Movie()
     movies.title = req.body.title;
 
@@ -105,7 +128,7 @@ router.get('/movies', authJwtController.isAuthenticated, function(req, res) {
             })
              
         }
-    });
+    }});
 
 router.post('/movies', authJwtController.isAuthenticated, function(req, res) {
     if(!req.body.title){
