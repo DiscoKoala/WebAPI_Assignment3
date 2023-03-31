@@ -87,7 +87,13 @@ router.post('/signin', function(req, res) {
     })
 });
 
+// GET /Movies request response. If review(s) for movie exist, aggregate data
+// from both movie and review entities.
+// Otherwise, return list of movies.
 router.get('/movies', authJwtController.isAuthenticated, function(req, res) {
+    var movies = new Movie()
+    movies.title = req.body.title;
+    
     if(req.query.review == "true"){
         movies.aggregate(([
             {
@@ -110,25 +116,21 @@ router.get('/movies', authJwtController.isAuthenticated, function(req, res) {
             res.json(movies)
         })    
     } else{
-
-    var movies = new Movie()
-    movies.title = req.body.title;
-
-    if(!movies){
-        res.status(404).send({success: false, message: 'Query failed. Movie not found.'});
-    } 
-    else {
-        Movie.find(function(err, movies){
-            if(err){
-                return res.status(500).send(err)
-                }
+        if(!movies){
+            res.status(404).send({success: false, message: 'Query failed. Movie not found.'});
+        } 
+        else {
+            Movie.find(function(err, movies){
+                if(err){
+                    return res.status(500).send(err)
+                } 
                 else{
-                res.status(200).json(movies);
+                    res.status(200).json(movies);
                 }
-            })
-             
+            })                
         }
-    }});
+    }
+});
 
 router.post('/movies', authJwtController.isAuthenticated, function(req, res) {
     if(!req.body.title){
